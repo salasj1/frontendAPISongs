@@ -2,8 +2,8 @@ import { Navbar } from "components/Navbar";
 import "../styles/globals.css";
 
 export const metadata = {
-  title: "NextMongo",
-  description: "NextMongo is a simple app to manage tasks.",
+  title: "API SONGS",
+  description: "API SONGS is a simple app to manage songs.",
 }
 
 function RootLayout({ children }) {

@@ -1,21 +1,36 @@
-import { dbConnect } from "@/utils/mongoose";
-import TaskCard from "@/components/TaskCard";
-import Task from "@/models/Task";
+"use client";
+import React, { useEffect, useState } from 'react';
+import SongCard from "@/components/SongCard";
+export default function HomePage() {
+  const [songs, setSongs] = useState([]);
 
-export async function loadTasks() {
-  await dbConnect();
-  const tasks = await Task.find();
-  return tasks;
-}
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const res = await fetch('http://localhost:3001/song');
+        const { songData } = await res.json(); // Aquí es donde se hace el cambio
+        if (Array.isArray(songData)) {
+          setSongs(songData);
+        } else {
+          console.error("songData fetched is not an array:", songData);
+        }
+      } catch (error) {
+        console.error("Error fetching songs:", error);
+      }
+    };
 
-export default async function HomePage() {
-  const tasks = await loadTasks();
+    fetchSongs();
+  }, []);
 
   return (
-    <div className="grid md:grid-cols-3 gap-2">
-      {tasks.map((task) => (
-        <TaskCard task={task} key={task._id} />
+    <div>
+      <h1 className="text-4xl font-bold text-center my-10">Escoge una canción para mas detalles</h1>
+      <div className="grid md:grid-cols-3 gap-2">
+      {songs.map((song) => (
+        <SongCard song={song} key={song._id} />
       ))}
     </div>
+    </div>
+
   );
 }

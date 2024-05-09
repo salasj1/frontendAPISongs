@@ -1,4 +1,4 @@
-import Task from "@/models/Task";
+import Task from "@/models/Song";
 import { dbConnect } from "@/utils/mongoose";
 import { NextResponse } from "next/server";
 

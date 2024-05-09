@@ -10,9 +10,9 @@ export async function dbConnect() {
   }
 
   const db = await connect(
-    process.env.MONGODB_URI || "mongodb://localhost:27017/nextjs"
+     "http://localhost:3000/"
   );
-  // console.log(db.connection.db.databaseName);
+    console.log(db.connection.db.databaseName);
   conn.isConnected = db.connections[0].readyState;
 }
 
