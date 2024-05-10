@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react"; 
 import { useRouter, useParams } from "next/navigation";
-
+import dotenv from 'dotenv';
+dotenv.config();
 const NewSong = () => { 
   const [newSong, setNewSong] = useState({ 
   name: "", 
@@ -11,13 +12,13 @@ const NewSong = () => {
 });
 const params = useParams(); 
 const router = useRouter();
-const url_backend = "http://localhost:3001/song";
+const url_backend = process.env.NEXT_PUBLIC_BACKEND_URL;
 const [isSubmitting, setIsSubmitting] = useState(false); 
 const [errors, setErrors] = useState({});
 
 const getSong = async () => { 
   try {
-  const res = await fetch(url_backend+`/${params.id}`);
+  const res = await fetch(url_backend+`/song/${params.id}`);
   const data = await res.json(); 
   setNewSong({
     name: data.name,
@@ -90,7 +91,7 @@ const validate = () => { let errors = {};
     if (window.confirm("Are you sure you want to delete this song?"))
     { 
       try { 
-        const res = await fetch(url_backend+`/${params.id}`,
+        const res = await fetch(`${url_backend}/${params.id}`,
         { method: "DELETE",});
         router.push("/");
         router.refresh(); 
@@ -101,7 +102,7 @@ const validate = () => { let errors = {};
   };
   const updateSong = async () => { 
     try {
-      await fetch(url_backend+`/${params.id}`,
+      await fetch(`${url_backend}/${params.id}`,
       { 
         method: "PATCH",
         headers: { 

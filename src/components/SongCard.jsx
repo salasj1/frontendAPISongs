@@ -9,8 +9,6 @@ export function SongCard({ song }) {
         <p className="text-slate-300"><span className="mr-1">Artist:</span>{song.artist}</p>
         <p className="text-slate-300"><span className="mr-1">Genre:</span>{song.genre}</p>
         <p className="text-slate-400 my-2">
-          <span className="mr-1">Created at:</span>
-          {new Date(song.createdAt).toLocaleDateString()}
         </p>
       </div>
     </Link>

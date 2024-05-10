@@ -1,15 +1,16 @@
 "use client";
 import { useState } from "react"; 
 import SongCard from "@/components/SongCard"; // Asegúrate de importar el componente SongCard
-
+import dotenv from 'dotenv';
 const Busqueda = () => { 
+  dotenv.config();
   const [searchTerm, setSearchTerm] = useState(""); 
   const [songs, setSongs] = useState([]);
-  const url_backend = "http://localhost:3001/song";
+  const url_backend = process.env.NEXT_PUBLIC_BACKEND_URL;
   const handleSubmit = async (e) => { 
     e.preventDefault(); 
     try {
-      const res = await fetch(`${url_backend}/search/${searchTerm}`);
+      const res = await fetch(`${url_backend}/song/search/${searchTerm}`);
       const data = await res.json(); 
       if (Array.isArray(data)) { 
         setSongs(data);

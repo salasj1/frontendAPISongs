@@ -1,13 +1,17 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import SongCard from "@/components/SongCard";
+import dotenv from 'dotenv';
+dotenv.config();
 export default function HomePage() {
   const [songs, setSongs] = useState([]);
-
+  
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const res = await fetch('http://localhost:3001/song');
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/song`);
+
         const { songData } = await res.json(); // Aquí es donde se hace el cambio
         if (Array.isArray(songData)) {
           setSongs(songData);
