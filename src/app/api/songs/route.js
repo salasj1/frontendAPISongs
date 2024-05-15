@@ -1,9 +1,9 @@
 import Song from "@/models/Song";
-import { dbConnect } from "@/utils/mongoose";
+
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await dbConnect();
+  
   const songs = await Song.find();
   return NextResponse.json(songs);
   

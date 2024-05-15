@@ -1,9 +1,9 @@
 import Song from "@/models/Song";
-import { dbConnect } from "@/utils/mongoose";
+
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
-  dbConnect();
+  
   try {
     const songFound = await Song.findById(params.id);
 
@@ -52,7 +52,7 @@ export async function PATCH(request, { params }) {
 }
 export async function PUT(request, { params }) {
   const body = await request.json();
-  dbConnect();
+  
 
   try {
     const songUpdated = await Song.findByIdAndUpdate(params.id, body, {
@@ -78,7 +78,7 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
-  dbConnect();
+  
 
   try {
     const songDeleted = await Song.findByIdAndDelete(params.id);

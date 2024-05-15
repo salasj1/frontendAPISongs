@@ -1,9 +1,9 @@
 import Task from "@/models/Song";
-import { dbConnect } from "@/utils/mongoose";
+
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await dbConnect();
+
   const tasks = await Task.find();
   return NextResponse.json(tasks);
 }

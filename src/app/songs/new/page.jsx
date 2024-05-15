@@ -18,7 +18,10 @@ const [errors, setErrors] = useState({});
 
 const getSong = async () => { 
   try {
-  const res = await fetch(url_backend+`/song/${params.id}`);
+  const res = await fetch(`${url_backend}/song/${params.id}`,
+  { method: "GET",
+  headers: { "Content-Type": "application/json", }, }
+  );
   const data = await res.json(); 
   setNewSong({
     name: data.name,
@@ -29,7 +32,6 @@ const getSong = async () => {
     console.error(error);
     // Aquí puedes manejar el error como prefieras
   }
-
 };
 
 useEffect(() => {
@@ -43,7 +45,6 @@ const handleSubmit = async (e) => {
   if (Object.keys(errs).length) return setErrors(errs);
 
   setIsSubmitting(true);
-  
   if (params.id) {
     await updateSong();
   } else {
@@ -75,14 +76,13 @@ const validate = () => { let errors = {};
 
   const createSong = async () => { 
   try { 
-    await fetch(url_backend,
+    const result= await fetch(url_backend+"/song",
     { method: "POST",
       headers: { "Content-Type": "application/json", }, 
       body: JSON.stringify(newSong), 
-    }
-  );
+    });
     router.push("/");
-    router.reload(); 
+    router.refresh();
   } catch (error)
    { console.error(error); }
   };
@@ -91,7 +91,7 @@ const validate = () => { let errors = {};
     if (window.confirm("Are you sure you want to delete this song?"))
     { 
       try { 
-        const res = await fetch(`${url_backend}/${params.id}`,
+        const res = await fetch(`${url_backend}/song/${params.id}`,
         { method: "DELETE",});
         router.push("/");
         router.refresh(); 
@@ -102,7 +102,7 @@ const validate = () => { let errors = {};
   };
   const updateSong = async () => { 
     try {
-      await fetch(`${url_backend}/${params.id}`,
+      await fetch(`${url_backend}/song/${params.id}`,
       { 
         method: "PATCH",
         headers: { 
@@ -110,8 +110,9 @@ const validate = () => { let errors = {};
         }, 
         body: JSON.stringify(newSong),
       });
+      connsole.log(JSON.stringify(newSong));
       router.push("/");
-      router.reload();
+      router.refresh();
     } catch (error) {
       console.log(error);
     }
